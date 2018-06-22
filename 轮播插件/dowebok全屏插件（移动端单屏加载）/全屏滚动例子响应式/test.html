@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/jquery.fullPage.css">
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery.fullPage.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+</head>
+<style>
+    body{
+        font-family: '微软雅黑';
+    }
+    .section{
+        text-align: center;
+    }
+    .s1{background: url("images/1.jpg") no-repeat;background-size: cover;text-align: center}
+    .s2{background: url("images/2.jpg") no-repeat;background-size: cover}
+    .s3{background: url("images/3.jpg") no-repeat;background-size: cover}
+    .s4{background: url("images/4.jpg") no-repeat;background-size: cover}
+    .s2 span { position: relative; left: -120%;}
+    .s2 img { position: relative; left: -260%;}
+
+    .s3 span { position: relative; right: -120%;}
+    .s3 img { position: relative; right: -350%;}
+
+    .s4 span,.s4 img { display: none}
+
+    .s1 span,.s1 img,
+    .s2 span,.s2 img,
+    .s3 span,.s3 img{
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .section span{
+        font-size: 2em;
+        color: white;
+        margin-left: 20px;
+    }
+    .section a{
+        /*width: 100%;*/
+        display: inline-block;
+    }
+    @media (max-width:480px) {
+        .section a img{
+            width: 65%;
+        }
+    }
+
+</style>
+
+<body>
+<div class="demo">
+    <div class="section s1">
+        <a><img src="images/iphone-green.png" alt=""/></a>
+        <span>一部属于你的iPhone</span>
+    </div>
+    <div class="section s2">
+        <a><img src="images/iphone2.png" alt=""/></a>
+        <span>不，是你的iPhone</span>
+    </div>
+    <div class="section s3">
+        <a><img src="images/iphone-red.png" alt=""/></a>
+        <span>哇~，红色的iPhone</span>
+    </div>
+    <div class="section s4">
+        <a><img src="images/iphone-blue.png" alt=""/></a>
+        <span>咦~，蓝色的iPhone</span>
+    </div>
+</div>
+</body>
+<script>
+    $(function(){
+        $('.demo').fullpage({
+            'anchors': ['page1', 'page2', 'page3', 'page4'],//定义锚链接
+            'verticalCentered': true,//内容是否垂直居中
+            'resize':true,//	字体是否随着窗口缩放而缩放
+            'css3': true,//是否使用 CSS3 transforms 滚动
+            'navigation': true,//是否显示项目导航
+            'navigationPosition': 'right',//项目导航的位置，可选 left 或 right
+            'navigationTooltips': ['iphone1', 'iphone2', 'iphone3', 'iphone4'],//项目导航的 tip
+            'scrollingSpeed':500,//滚动速度，单位为毫秒
+
+         //afterLoad 滚动到某一屏后的回调函数，接收 anchorLink 和 index 两个参数，anchorLink 是锚链接的名称，index 是序号，从1开始计算
+            afterLoad: function(anchorLink, index){
+                if(index == 2){
+                    $('.s2').find('span').delay(1000).animate({
+                        left: '0'
+                    }, 900, 'easeOutExpo');
+                    $('.s2').find('img').delay(100).animate({
+                        left: '0'
+                    }, 900, 'easeOutExpo');
+                }
+                if(index == 3){
+                    $('.s3').find('span').delay(1000).animate({
+                        right: '0'
+                    }, 900, 'easeOutExpo');
+                    $('.s3').find('img').delay(100).animate({
+                        right: '0'
+                    }, 900, 'easeOutExpo');
+                }
+                if(index == 4){
+                    $('.s4').find('span').fadeIn(10000);
+                    $('.s4').find('img').fadeIn(1000);
+                }
+            },
+            onLeave: function(index, direction){
+                if(index == '2'){
+                    $('.s2').find('span').delay(500).animate({
+                        left: '-120%'
+                    }, 1000, 'easeOutExpo');
+                    $('.s2').find('img').delay(500).animate({
+                        left: '-260%'
+                    }, 1000, 'easeOutExpo');
+                }
+                if(index == '3'){
+                    $('.s3').find('span').delay(500).animate({
+                        right: '-120%'
+                    }, 1000, 'easeOutExpo');
+                    $('.s3').find('img').delay(500).animate({
+                        right: '-350%'
+                    }, 1000, 'easeOutExpo');
+                }
+                if(index == 4){
+                    $('.s4').find('span').fadeOut(10000);
+                    $('.s4').find('img').fadeOut(1000);
+                }
+            }
+        });
+
+
+
+
+
+        $(window).resize(function(){
+            autoScrolling();
+        });
+
+        function autoScrolling(){
+            var $ww = $(window).width();
+            if($ww < 300){
+                $.fn.fullpage.setAutoScrolling(false);
+            } else {
+                $.fn.fullpage.setAutoScrolling(true);
+            }
+        }
+
+        autoScrolling();
+    })
+</script>
+</html>

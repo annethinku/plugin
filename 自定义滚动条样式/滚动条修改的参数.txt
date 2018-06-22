@@ -1,0 +1,1 @@
+easyscroll.js   中的verticalDragMaxHeight是控制高度的   mouseWheelSpeed是控制左边内容滚动的速度  
